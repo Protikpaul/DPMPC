@@ -53,14 +53,13 @@
 \newcommand{\FP}{\ensuremath{\mathbb{F}}_{\mathsf{p}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 
-
 %--------------------------------------------------------------
 %MPC SubProtocols
 %--------------------------------------------------------------
 
 %\newcommand{\Adv}{\ensuremath{\mathcal{A}}\xspace}
-\newcommand{\Sim}{\ensuremath{\mathcal{S}}}
-
+\newcommand{\Sim}{\ensuremath{\mathsf{S}}}
+\newcommand{\Ser}{\ensuremath{\mathcal{S}}}
 %--------------------------------------------------------------
 %MPC Variables
 %--------------------------------------------------------------
@@ -97,7 +96,8 @@
 \newcommand{\multrt}{\ensuremath{\trunc{\multr}}}
 \newcommand{\multu}{\ensuremath{\mathbf{u}}}
 \newcommand{\multv}{\ensuremath{\mathbf{v}}}
-
+\newcommand{\twotshr}[1]{\langle #1 \rangle}
+\newcommand{\tshr}[1]{[#1]}
 
 %--------------------------------------------------------------
 % ML - Macros for Vectors and Matrices
@@ -108,7 +108,7 @@
 \newcommand{\vp}{\mathbf{p}}
 \newcommand{\vq}{\mathbf{q}}
 \newcommand{\vu}{\mathbf{u}}
-%\newcommand{\vv}{\mathbf{v}}
+\newcommand{\vv}{\mathbf{v}}
 \newcommand{\vw}{\mathbf{w}}
 \newcommand{\vx}{\mathbf{x}}
 \newcommand{\vy}{\mathbf{y}}
@@ -440,7 +440,7 @@
 
 \begin{comment}
 
-%Basic box structure with title box
+Basic box structure with title box
 \newenvironment{titlebox}[3]
 {\mdfsetup{
 		style=#2,

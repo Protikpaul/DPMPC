@@ -1,2 +1,49 @@
-section1
+\section{malicious DPMPC}
+Information-Theoretic - security with abort
+Let $f:\F^n \leftarrow \F$ be a function. $\{P_1, \ldots, P_n\}$ are the parties such that $x_i$ is the input of $P_i$. 
+
+$\Ser^{\ell}$ be the set of servers of the $\ell$-th epoch. 
+
+\subsection{Input sharing phase: }
+\begin{itemize}
+	\item $P_i$ picks random $a_i\in \F$ and shares among all the parties: i.e. $P_j$ gets $[a_i]_j$, the $j$th share of $a_i$.
+	
+	\item Each parties $P_i$ computes 
+	$([r_1]_i, \ldots, [r_{n-t}]_i)^T = M(\tshr{a_1}_i, \ldots, \tshr{a_n}_i)^T$.
+	
+	\item $P_i$ sends $[r]_j$ from the party $P_j \; j\in[n]$ and $P_i$ reconstructs $r$. Then $P_i$ sends $x+r$ to all the parties.
+\end{itemize}
+\subsection{Evaluation phase: }
+\begin{itemize}
+	\item {\bf Preparation:} $\tshr{r},\;\twotshr{r}$ are generated from computing $M(\tshr{a_1},\ldots, \tshr{a_n})^T$ and $M(\twotshr{a_1},\ldots, \twotshr{a_n})^T$. Among all the parties randomly a party is chosen as $P_{king}$.
+	
+	\item {\bf Addition:} On input $x,\;y$, $P_i$ has shares of $x,\;y$, i.e. $\tshr{x}_i,\;\tshr{y}_i$. $P_i$  locally computes $\tshr{z}_i = \tshr{x}_i+\tshr{y}_i$.
+	
+	\item {\bf Multiplication:} On input $x,\;y$, $P_i$ has shares of $x, \;y$, i.e. $\tshr{x}_i,\;\tshr{y}_i$. Then 
+	\begin{itemize}
+		\item $P_i$ locally computes $\twotshr{z}_i = \tshr{x}_i\cdot \tshr{y}_i$. 
+		\item Then sends $\twotshr{z}_i +\twotshr{r}_i$ to $P_{king}$.
+		\item $P_{King}$ reconstructs $z+r$, and sends to all the parties.
+		\item $P_i$ obtains $\tshr{z}_i = z+r - \tshr{r}_i$.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Hand-off phase: } Let at the end of the $\ell$-th epoch, $\Ser^{\ell}$ hands-off all the shares held by $\Ser^{\ell}$ to $\Ser^{\ell+1}$, say $s$ be the secret to be shared. The hand-off phase happens in the following way:
+\begin{itemize}
+	\item $\Ser^{\ell+1}$ picks $a_1, a_2, \ldots, a_n$ and obtains coupled sharing $(\tshr{a_1}, \tshr{\tilde{a}_1}), \ldots, (\tshr{a_n}, \tshr{\tilde{a}_n})$ which all open to $a_1, \ldots, a_n$ respectively. 
+	
+	\item $P'_i\in \Ser^{\ell+1}$ sends $\tshr{\tilde{a}_1}_j$ to the server $P'_j\in \Ser^{\ell+1}$ and $\tshr{a_1}_j$ to the server $P_j\in\Ser^{\ell}$.
+	
+	\item Each server in old and new committee does the following: 
+	\begin{itemize}
+		\item $(\tshr{r_1}, \ldots, \tshr{r_{n-t}})^T = M(\tshr{a_1}, \ldots, \tshr{a_n})^T$
+		\item $(\tshr{\tilde{r}_1}, \ldots, \tshr{\tilde{r}_{n-t}})^T = M(\tshr{\tilde{a}_1}, \ldots, \tshr{\tilde{a}_n})^T$
+	\end{itemize}
+	
+	\item $P_i$ with the share $\tshr{s}_i$ computes $\tshr{s}_i+\tshr{r}_i$ and sends it to $P_{King}$.
+	
+	\item $P_{King}$ gets shares $\tshr{s}+\tshr{r}$ and reconstructs $s+r$ and sends to $\Ser^{\ell+1}$.
+	
+	\item Each party locally gets $\tshr{\tilde{s}} = (s+r)-\tshr{\tilde{r}}$.
+\end{itemize}
 
