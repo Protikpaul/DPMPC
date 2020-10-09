@@ -3,8 +3,8 @@ Information-Theoretic - security with abort
 Let $f:\F^n \leftarrow \F$ be a function. $\{P_1, \ldots, P_n\}$ are the parties such that $x_i$ is the input of $P_i$. 
 
 $\Ser^{\ell}$ be the set of servers of the $\ell$-th epoch. 
-
-\subsection{Input sharing phase: }
+\subsection{Protocol: }
+\subsubsection{Input sharing phase: }
 \begin{itemize}
 	\item $P_i$ picks random $a_i\in \F$ and shares among all the parties: i.e. $P_j$ gets $[a_i]_j$, the $j$th share of $a_i$.
 	
@@ -13,7 +13,7 @@ $\Ser^{\ell}$ be the set of servers of the $\ell$-th epoch.
 	
 	\item $P_i$ sends $[r]_j$ from the party $P_j \; j\in[n]$ and $P_i$ reconstructs $r$. Then $P_i$ sends $x+r$ to all the parties.
 \end{itemize}
-\subsection{Evaluation phase: }
+\subsubsection{Evaluation phase: }
 \begin{itemize}
 	\item {\bf Preparation:} $\tshr{r},\;\twotshr{r}$ are generated from computing $M(\tshr{a_1},\ldots, \tshr{a_n})^T$ and $M(\twotshr{a_1},\ldots, \twotshr{a_n})^T$. Among all the parties randomly a party is chosen as $P_{king}$.
 	
@@ -28,7 +28,7 @@ $\Ser^{\ell}$ be the set of servers of the $\ell$-th epoch.
 	\end{itemize}
 \end{itemize}
 
-\subsection{Hand-off phase: } Let at the end of the $\ell$-th epoch, $\Ser^{\ell}$ hands-off all the shares held by $\Ser^{\ell}$ to $\Ser^{\ell+1}$, say $s$ be the secret to be shared. The hand-off phase happens in the following way:
+\subsubsection{Hand-off phase: } Let at the end of the $\ell$-th epoch, $\Ser^{\ell}$ hands-off all the shares held by $\Ser^{\ell}$ to $\Ser^{\ell+1}$, say $s$ be the secret to be shared. The hand-off phase happens in the following way:
 \begin{itemize}
 	\item $\Ser^{\ell+1}$ picks $a_1, a_2, \ldots, a_n$ and obtains coupled sharing $(\tshr{a_1}, \tshr{\tilde{a}_1}), \ldots, (\tshr{a_n}, \tshr{\tilde{a}_n})$ which all open to $a_1, \ldots, a_n$ respectively. 
 	
@@ -46,3 +46,16 @@ $\Ser^{\ell}$ be the set of servers of the $\ell$-th epoch.
 	
 	\item Each party locally gets $\tshr{\tilde{s}} = (s+r)-\tshr{\tilde{r}}$.
 \end{itemize}
+
+\subsection{Simulation: }
+\subsubsection{Simulation for input sharing: }
+Let $P_i$ be a party with input $x$. $\Sim$ be the simulator. There are two possible cases can happen. 
+
+{\bf case 1:} {\em $P_i$ is corrupt. } On behalf of the honest parties, $\Sim$ picks random $\{a_j\}_{j\in H}$, where $H$ is the set of honest parties. Then, $\Sim$ sends the shares of the corrupt parties of $a_j, \; \forall j\in H$, to the adversary $\Adv$.
+So, $\Adv$ receives $\{\tshr{a_j}_k\}_{k\in C}$, where $C$ is the set of all corrupt parties, for all $j\in H$. 
+And, $\Sim$ receives $\{\tshr{a}_k\}_{j\in H} \; \forall k\in C$ from $\Adv$.
+For an honest party, $P_j$, $\Sim$ computes $(\tshr{r_1}_j,\ldots, \tshr{r_{n-t}}_j)^T = M (\tshr{a_1}_j, \ldots, \tshr{a_n}_j)$. 
+$\Sim$ sends $\tshr{r_1}_j$ to the client i.e. $\Adv$.
+$\Adv$ reconstructs $r_1$ and sends $x+r$ to $\Sim$.
+
+{\bf case 2:} {\em $P_i$ is honest. }
